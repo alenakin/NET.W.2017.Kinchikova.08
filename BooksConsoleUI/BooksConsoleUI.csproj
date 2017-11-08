@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6AA534C2-7FEE-44A4-B420-665BBB2C30F7}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Books</RootNamespace>
-    <AssemblyName>Books</AssemblyName>
+    <ProjectGuid>{3BBC9B95-8075-4233-B04A-EB9329117217}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>BooksConsoleUI</RootNamespace>
+    <AssemblyName>BooksConsoleUI</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -40,16 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinaryBookListStorage.cs" />
-    <Compile Include="Book.cs" />
-    <Compile Include="BookListService.cs" />
-    <Compile Include="IBookListStorage.cs" />
-    <Compile Include="Comporators\OrderByName.cs" />
-    <Compile Include="Comporators\OrderByYear.cs" />
-    <Compile Include="IPredicate.cs" />
-    <Compile Include="Predicates\SameNames.cs" />
-    <Compile Include="Predicates\SameYear.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Books\Books.csproj">
+      <Project>{6aa534c2-7fee-44a4-b420-665bbb2c30f7}</Project>
+      <Name>Books</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
