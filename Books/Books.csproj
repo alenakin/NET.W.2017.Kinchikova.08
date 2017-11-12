@@ -40,13 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinaryBookListStorage.cs" />
+    <Compile Include="Storages\BinaryBookListStorage.cs" />
     <Compile Include="Book.cs" />
     <Compile Include="BookListService.cs" />
-    <Compile Include="IBookListStorage.cs" />
+    <Compile Include="Storages\IBookListStorage.cs" />
     <Compile Include="Comporators\OrderByName.cs" />
     <Compile Include="Comporators\OrderByYear.cs" />
-    <Compile Include="IPredicate.cs" />
+    <Compile Include="Predicates\IPredicate.cs" />
     <Compile Include="Predicates\SameNames.cs" />
     <Compile Include="Predicates\SameYear.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -9,19 +9,72 @@ namespace Books
     /// <summary>
     /// Class for storing information about book
     /// </summary>
-    public class Book : IEquatable<Book>, IComparable<Book>
+    public class Book : IEquatable<Book>, IComparable<Book>, IComparable
+
     {
         #region Fields 
+        private string isbn;
+        private string author;
+        private string name;
+        private string publishingHouse;
         private int year;
         private int numberOfPages;
         private decimal price;
         #endregion
 
         #region Properties
-        public string ISBN { get; set; }
-        public string Author { get; set; }
-        public string Name { get; set; }
-        public string PublishingHouse { get; set; }
+        public string ISBN
+        {
+            get => isbn;
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    throw new ArgumentNullException(
+                   $"{nameof(value)} must have some value.");
+
+                isbn = value;
+            }
+        }
+
+        public string Author
+        {
+            get => author;
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    throw new ArgumentNullException(
+                   $"{nameof(value)} must have some value.");
+
+                author = value;
+            }
+        }
+
+        public string Name
+        {
+            get => name;
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    throw new ArgumentNullException(
+                   $"{nameof(value)} must have some value.");
+
+                name = value;
+            }
+        }
+
+        public string PublishingHouse
+        {
+            get => publishingHouse;
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    throw new ArgumentNullException(
+                   $"{nameof(value)} must have some value.");
+
+                publishingHouse = value;
+            }
+        }
+
         public int Year
         {
             get => year;
@@ -34,6 +87,7 @@ namespace Books
                 year = value;
             }
         }
+
         public int NumberOfPages
         {
             get => year;
@@ -42,6 +96,9 @@ namespace Books
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(
                    $"{nameof(value)} must be greater than zero.");
+                if (value > 3000)
+                    throw new ArgumentOutOfRangeException(
+                   $"{nameof(value)} too large to be the number of pages in book.");
 
                 numberOfPages = value;
             }
@@ -65,7 +122,7 @@ namespace Books
         /// <summary>
         /// Compares the current instance with another object of type Book
         /// </summary>
-        /// <param name="other"></param>
+        /// <param name="other">Book to compare with</param>
         /// <returns>An integer that indicates whether the current 
         /// instance precedes, follows, or occurs in the same position in the sort order as the other object.</returns>
         public int CompareTo(Book other)
@@ -74,6 +131,22 @@ namespace Books
                 throw new ArgumentNullException();
 
             return Author.CompareTo(other.Author);
+        }
+
+        /// <summary>
+        /// Compares the current instance with another object
+        /// </summary>
+        /// <param name="other">Object to compare with</param>
+        /// <returns>An integer that indicates whether the current 
+        /// instance precedes, follows, or occurs in the same position in the sort order as the other object.</returns>
+        public int CompareTo(object obj)
+        {
+            if (obj == null)
+                throw new ArgumentNullException();
+            if (!(obj is Book))
+                throw new ArgumentException();
+
+            return CompareTo((Book)obj);
         }
 
         /// <summary>
@@ -112,9 +185,9 @@ namespace Books
         }
 
         /// <summary>
-        /// Hash function
+        /// Returns the hash code for this instance.
         /// </summary>
-        /// <returns>Hash of current object</returns>
+        /// <returns>A 32-bit signed integer hash code.</returns>
         public override int GetHashCode()
         {
             int result = 17;
@@ -130,7 +203,7 @@ namespace Books
         /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>String representation of current object.</returns>
         public override string ToString()
         {
             string result = "";

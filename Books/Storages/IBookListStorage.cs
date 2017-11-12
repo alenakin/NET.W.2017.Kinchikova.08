@@ -15,7 +15,7 @@ namespace Books
         /// Save collection of books in storage
         /// </summary>
         /// <param name="books"></param>
-        void Save(List<Book> books);
+        void Save(IEnumerable<Book> books);
 
         /// <summary>
         /// Load collection of books from storage

@@ -32,32 +32,11 @@ namespace Books
         public List<Book> Load()
         {
             var books = new List<Book>() { };
-            var file = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            var file = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read);
 
             using (var reader = new BinaryReader(file))
-            {
                 while(reader.PeekChar() != -1)
-                {
-                    string ISBN = reader.ReadString();
-                    string author = reader.ReadString();
-                    string name = reader.ReadString();
-                    string publishingHouse = reader.ReadString();
-                    int year = reader.ReadInt32();
-                    int numberOfPages = reader.ReadInt32();
-                    decimal price = reader.ReadDecimal();
-
-                    books.Add(new Book
-                    {
-                        ISBN = ISBN,
-                        Author = author,
-                        Name = name,
-                        PublishingHouse = publishingHouse,
-                        Year = year,
-                        NumberOfPages = numberOfPages,
-                        Price = price
-                    });
-                }
-            }
+                    books.Add(ReadBookFromFile(reader));
 
             return books;
         }
@@ -66,7 +45,7 @@ namespace Books
         /// Save book collection to the binary file
         /// </summary>
         /// <param name="books"></param>
-        public void Save(List<Book> books)
+        public void Save(IEnumerable<Book> books)
         {
             var file = new FileStream(filePath, FileMode.Create, FileAccess.Write);
 
@@ -74,17 +53,45 @@ namespace Books
             {
                 Console.WriteLine(file.CanRead);
                 foreach (Book book in books)
-                {
-                    writer.Write(book.ISBN);
-                    writer.Write(book.Author);
-                    writer.Write(book.Name);
-                    writer.Write(book.PublishingHouse);
-                    writer.Write(book.Year);
-                    writer.Write(book.NumberOfPages);
-                    writer.Write(book.Price);
-                }
+                    WriteBookToFile(writer, book);
             }
         }
+
+        #region Private methods
+        private Book ReadBookFromFile(BinaryReader reader)
+        {
+            string ISBN = reader.ReadString();
+            string author = reader.ReadString();
+            string name = reader.ReadString();
+            string publishingHouse = reader.ReadString();
+            int year = reader.ReadInt32();
+            int numberOfPages = reader.ReadInt32();
+            decimal price = reader.ReadDecimal();
+
+            return new Book
+            {
+                ISBN = ISBN,
+                Author = author,
+                Name = name,
+                PublishingHouse = publishingHouse,
+                Year = year,
+                NumberOfPages = numberOfPages,
+                Price = price
+            };
+        }
+
+        private void WriteBookToFile(BinaryWriter writer, Book book)
+        {
+            writer.Write(book.ISBN);
+            writer.Write(book.Author);
+            writer.Write(book.Name);
+            writer.Write(book.PublishingHouse);
+            writer.Write(book.Year);
+            writer.Write(book.NumberOfPages);
+            writer.Write(book.Price);
+        }
+        #endregion
+
         #endregion
     }
 }

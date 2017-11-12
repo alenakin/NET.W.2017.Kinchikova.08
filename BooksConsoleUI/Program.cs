@@ -13,12 +13,14 @@ namespace BooksConsoleUI
     {
         static void Main(string[] args)
         {
-            string path = @"C:\Users\Elena\Documents\Visual Studio 2017\Projects\NET.W.2017.Kinchikova.08\books.dat";
-            BinaryBookListStorage st = new BinaryBookListStorage(path);
+            string path = FilePathProvider.GetPath();
+            BinaryBookListStorage storage = new BinaryBookListStorage(path);
             var books = CreateBooks();
 
             var service = new BookListService(books);
-            service.LoadBooks(st);
+            Console.WriteLine("Books in book service: ");
+            ShowBookCollection(service.Books);
+           
             service.AddBook(new Book()
             {
                 ISBN = "num",
@@ -29,21 +31,20 @@ namespace BooksConsoleUI
                 NumberOfPages = 200,
                 Price = 25.3m
             });
-            foreach (var b in service.Books)
-                Console.WriteLine(b);
-            //service.RemoveBook(
-            //    new Book()
-            //    {
-            //        ISBN = "num",
-            //        Author = "Author",
-            //        Name = "Name",
-            //        PublishingHouse = "Publ",
-            //        Year = 1900,
-            //        NumberOfPages = 200,
-            //        Price = 25.3m
-            //    });
-            foreach (var b in service.Books)
-                Console.WriteLine(b);
+            Console.WriteLine("After adding book: ");
+            ShowBookCollection(service.Books);
+
+            var book = service.FindBook(new SameYear(), 1900);
+            Console.WriteLine("Book with year of publising - 1900: ");
+            Console.WriteLine(book);
+
+            service.RemoveBook(book);
+            Console.WriteLine("After removing book: ");
+            ShowBookCollection(service.Books);
+
+            service.SortBooksByTag(new OrderByName());
+            Console.WriteLine("Sort books by name: ");
+            ShowBookCollection(service.Books);
 
             Book book1 = new Book()
             {
@@ -67,12 +68,6 @@ namespace BooksConsoleUI
                 Price = 25.3m
             };
 
-            var book = service.FindBook(new SameYear(), 1900);
-            Console.WriteLine(book);
-
-            service.SortBooksByTag(new OrderByYear());
-            foreach (var b in service.Books)
-                Console.WriteLine(b);
         }
 
         static List<Book> CreateBooks()
