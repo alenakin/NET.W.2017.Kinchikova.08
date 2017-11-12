@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Books;
-using Books.Predicates;
 using Books.Comporators;
+using Books.Predicates;
 
 namespace BooksConsoleUI
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             string path = FilePathProvider.GetPath();
             BinaryBookListStorage storage = new BinaryBookListStorage(path);
@@ -37,6 +37,7 @@ namespace BooksConsoleUI
             var book = service.FindBook(new SameYear(), 1900);
             Console.WriteLine("Book with year of publising - 1900: ");
             Console.WriteLine(book);
+            Console.WriteLine(book.ToString("F"));
 
             service.RemoveBook(book);
             Console.WriteLine("After removing book: ");
@@ -67,16 +68,15 @@ namespace BooksConsoleUI
                 NumberOfPages = 200,
                 Price = 25.3m
             };
-
         }
 
-        static List<Book> CreateBooks()
+        private static List<Book> CreateBooks()
         {
             var books = new List<Book>();
 
             for (int i = 0; i < 3; i++)
             {
-                string ISBN = i.ToString();
+                string isbn = i.ToString();
                 string author = "a" + i;
                 string name = "n" + i;
                 string publishingHouse = "p" + i;
@@ -86,7 +86,7 @@ namespace BooksConsoleUI
 
                 books.Add(new Book
                 {
-                    ISBN = ISBN,
+                    ISBN = isbn,
                     Author = author,
                     Name = name,
                     PublishingHouse = publishingHouse,
@@ -95,13 +95,16 @@ namespace BooksConsoleUI
                     Price = price
                 });
             }
+
             return books;
         }
 
-        static void ShowBookCollection(List<Book> books)
+        private static void ShowBookCollection(List<Book> books)
         {
             foreach (var book in books)
+            {
                 Console.WriteLine(book);
+            }
         }
     }
 }

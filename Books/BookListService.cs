@@ -11,10 +11,6 @@ namespace Books
     /// </summary>
     public class BookListService
     {
-        public List<Book> Books { get; private set; }  = new List<Book>() { };
-
-        #region Methods
-
         /// <summary>
         /// Constructor
         /// </summary>
@@ -24,6 +20,9 @@ namespace Books
             Books = new List<Book>(books);
         }
 
+        public List<Book> Books { get; private set; } = new List<Book>() { };
+
+        #region Methods
         /// <summary>
         /// Load collection of books from specified storage
         /// </summary>
@@ -32,7 +31,9 @@ namespace Books
         public void LoadBooks(IBookListStorage bookListStorage)
         {
             if (bookListStorage == null)
+            {
                 throw new ArgumentNullException();
+            }
 
             Books = bookListStorage.Load();
         }
@@ -45,7 +46,9 @@ namespace Books
         public void SaveBooks(IBookListStorage bookListStorage)
         {
             if (bookListStorage == null)
+            {
                 throw new ArgumentNullException();
+            }
 
             bookListStorage.Save(Books);
         }
@@ -59,9 +62,14 @@ namespace Books
         public void AddBook(Book book)
         {
             if (book == null)
+            {
                 throw new ArgumentNullException();
+            }
+
             if (Books.Contains(book))
+            {
                 throw new Exception("This book is already in the collection");
+            }
 
             Books.Add(book);
         }
@@ -74,10 +82,17 @@ namespace Books
         public void AddBookRange(List<Book> books)
         {
             if (books == null)
+            {
                 throw new ArgumentNullException();
+            }
+
             foreach (Book b in books)
+            {
                 if (!Books.Contains(b))
+                {
                     Books.Add(b);
+                }
+            }
         }
 
         /// <summary>
@@ -88,7 +103,9 @@ namespace Books
         public void RemoveBook(Book book)
         {
             if (!Books.Contains(book))
+            {
                 throw new ArgumentException("There is no such book in the collection");
+            }
 
             Books.Remove(book);
         }
@@ -102,13 +119,18 @@ namespace Books
         public Book FindBook<T>(IPredicate<T> predicate, T value)
         {
             if (predicate == null)
+            {
                 throw new ArgumentNullException();
+            }
 
             foreach (var book in Books)
             {
                 if (predicate.FitsTheTag(book, value))
+                {
                     return book;
+                }
             }
+
             return null;
         }
 
@@ -119,7 +141,9 @@ namespace Books
         public void SortBooksByTag(IComparer<Book> comparer)
         {
             if (comparer == null)
+            {
                 throw new ArgumentNullException();
+            }
 
             Books.Sort(comparer);
         }

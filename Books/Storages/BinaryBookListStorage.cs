@@ -35,8 +35,12 @@ namespace Books
             var file = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Read);
 
             using (var reader = new BinaryReader(file))
-                while(reader.PeekChar() != -1)
+            {
+                while (reader.PeekChar() != -1)
+                {
                     books.Add(ReadBookFromFile(reader));
+                }
+            }
 
             return books;
         }
@@ -53,14 +57,16 @@ namespace Books
             {
                 Console.WriteLine(file.CanRead);
                 foreach (Book book in books)
+                {
                     WriteBookToFile(writer, book);
+                }
             }
         }
 
         #region Private methods
         private Book ReadBookFromFile(BinaryReader reader)
         {
-            string ISBN = reader.ReadString();
+            string isbn = reader.ReadString();
             string author = reader.ReadString();
             string name = reader.ReadString();
             string publishingHouse = reader.ReadString();
@@ -70,7 +76,7 @@ namespace Books
 
             return new Book
             {
-                ISBN = ISBN,
+                ISBN = isbn,
                 Author = author,
                 Name = name,
                 PublishingHouse = publishingHouse,

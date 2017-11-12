@@ -6,19 +6,20 @@ using System.Threading.Tasks;
 
 namespace BooksConsoleUI
 {
-    class FilePathProvider
+    internal class FilePathProvider
     {
         public static string GetPath()
         {
-            string path = String.Empty;
+            string path = string.Empty;
             try
             {
                 path = System.Configuration.ConfigurationManager.AppSettings["filepath"];
             }
-            catch(Exception)
+            catch (Exception)
             {
                 path = "books.dat";
             }
+
             return path;
         }
     }

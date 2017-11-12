@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Formatters\BookFormatter.cs" />
     <Compile Include="Storages\BinaryBookListStorage.cs" />
     <Compile Include="Book.cs" />
     <Compile Include="BookListService.cs" />
@@ -51,5 +52,6 @@
     <Compile Include="Predicates\SameYear.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
